@@ -1,0 +1,400 @@
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import Tooltip from '$lib/components/Tooltip.svelte';
+
+	let { data } = $props();
+	let email = '';
+	let isLoggedIn = $state(false);
+
+	$effect(() => {
+		isLoggedIn = !!data?.user;
+	});
+
+	function handleGetStarted() {
+		if (isLoggedIn) {
+			goto('/app');
+		} else {
+			goto('/register');
+		}
+	}
+
+	function handleSignIn() {
+		if (isLoggedIn) {
+			goto('/app');
+		} else {
+			goto('/login');
+		}
+	}
+
+	async function handleWaitlist() {
+		// You can implement waitlist functionality later
+		if (email) {
+			alert('Thanks for your interest! We\'ll be in touch soon.');
+			email = '';
+		}
+	}
+</script>
+
+<svelte:head>
+	<title>Tadwin - Markdown-First Note Taking & Knowledge Management</title>
+	<meta name="description" content="A powerful, markdown-first note-taking app designed for developers, writers, and knowledge workers. Organize your thoughts with workspaces, categories, and lightning-fast search." />
+	<link href="https://fonts.cdnfonts.com/css/oddval" rel="stylesheet">
+</svelte:head>
+
+<div class="min-h-screen bg-white">
+	<!-- Navigation -->
+	<nav class="border-b border-gray-200 bg-white/80 backdrop-blur-md fixed w-full top-0 z-50">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="flex justify-between items-center h-16">
+				<div class="flex items-center">
+					<Tooltip text="Tadwīn (تدوين) - Arabic for: writing, recording, documenting" color="#14b8a6">
+						<h1 class="text-2xl font-bold text-teal-400 cursor-help">Tadwin</h1>
+					</Tooltip>
+				</div>
+				<div class="hidden md:flex items-center space-x-8">
+					<a href="#features" class="text-gray-600 hover:text-gray-900 transition">Features</a>
+					<a href="#pricing" class="text-gray-600 hover:text-gray-900 transition">Pricing</a>
+					<a href="#about" class="text-gray-600 hover:text-gray-900 transition">About</a>
+					{#if isLoggedIn}
+					<button onclick={handleGetStarted} class="bg-teal-400 text-white px-6 py-2 rounded-lg hover:bg-teal-500 transition">
+						Launce App
+					</button>
+				{:else}
+					<button onclick={handleSignIn} class="text-gray-600 hover:text-gray-900 transition">
+						Sign In
+					</button>
+					<button onclick={handleGetStarted} class="bg-teal-400 text-white px-6 py-2 rounded-lg hover:bg-teal-500 transition">
+							Get Started
+						</button>
+					{/if}
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Hero Section -->
+	<section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto text-center">
+			<h2 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+				Your thoughts, <span class="text-teal-400">organized</span>
+			</h2>
+			<p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+				A powerful, markdown-first note-taking app designed for developers, writers, and knowledge workers. 
+				Organize your thoughts with workspaces, categories, and lightning-fast search.
+			</p>
+			<div class="flex flex-col sm:flex-row gap-4 justify-center">
+				{#if isLoggedIn}
+					<button onclick={handleGetStarted} class="bg-teal-400 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-teal-500 transition">
+						Launch App
+					</button>
+				{:else}
+					<button onclick={handleGetStarted} class="bg-teal-400 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-teal-500 transition">
+						Start Free Trial
+					</button>
+					<button onclick={handleSignIn} class="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg text-lg font-semibold hover:border-gray-400 transition">
+						Sign In
+					</button>
+				{/if}
+			</div>
+		</div>
+	</section>
+
+	<!-- Features Section -->
+	<section id="features" class="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<div class="text-center mb-16">
+				<h3 class="text-4xl font-bold text-gray-900 mb-4">Built for productivity</h3>
+				<p class="text-xl text-gray-600">Everything you need to capture, organize, and find your notes</p>
+			</div>
+
+			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+				<!-- Feature 1 -->
+				<div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition">
+					<div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+						<svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+						</svg>
+					</div>
+					<h4 class="text-xl font-semibold text-gray-900 mb-2">Markdown-First Editor</h4>
+					<p class="text-gray-600">Write naturally with markdown syntax. Format text, add code blocks, and create lists with ease.</p>
+				</div>
+
+				<!-- Feature 2 -->
+				<div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition">
+					<div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+						<svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+						</svg>
+					</div>
+					<h4 class="text-xl font-semibold text-gray-900 mb-2">Workspaces & Categories</h4>
+					<p class="text-gray-600">Organize notes into workspaces and categories. Keep personal and work notes separate.</p>
+				</div>
+
+				<!-- Feature 3 -->
+				<div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition">
+					<div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+						<svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+						</svg>
+					</div>
+					<h4 class="text-xl font-semibold text-gray-900 mb-2">Lightning-Fast Search</h4>
+					<p class="text-gray-600">Find anything instantly with full-text search across all your notes and workspaces.</p>
+				</div>
+
+				<!-- Feature 4 -->
+				<div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition">
+					<div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+						<svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+						</svg>
+					</div>
+					<h4 class="text-xl font-semibold text-gray-900 mb-2">Offline Support</h4>
+					<p class="text-gray-600">Edit notes offline and sync automatically when you're back online. Never lose your work.</p>
+				</div>
+
+				<!-- Feature 5 -->
+				<div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition">
+					<div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+						<svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+						</svg>
+					</div>
+					<h4 class="text-xl font-semibold text-gray-900 mb-2">Secure & Private</h4>
+					<p class="text-gray-600">Your notes are encrypted and stored securely. Your data belongs to you.</p>
+				</div>
+
+				<!-- Feature 6 -->
+				<div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition">
+					<div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+						<svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+						</svg>
+					</div>
+					<h4 class="text-xl font-semibold text-gray-900 mb-2">Fast & Lightweight</h4>
+					<p class="text-gray-600">Built with performance in mind. No bloat, just the features you need.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Pricing Section -->
+	<section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<div class="text-center mb-16">
+				<h3 class="text-4xl font-bold text-gray-900 mb-4">Simple, transparent pricing</h3>
+				<p class="text-xl text-gray-600">Start free, upgrade when you need more</p>
+			</div>
+
+			<div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+				<!-- Free Plan -->
+			<div class="bg-white p-8 rounded-xl border-2 border-gray-200 hover:border-teal-300 transition">
+					<h4 class="text-2xl font-bold text-gray-900 mb-2">Free</h4>
+					<div class="mb-6">
+						<span class="text-4xl font-bold text-gray-900">$0</span>
+						<span class="text-gray-600">/month</span>
+					</div>
+					<ul class="space-y-4 mb-8">
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-gray-600">1 workspace</span>
+						</li>
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-gray-600">Up to 100 notes</span>
+						</li>
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-gray-600">Basic search</span>
+						</li>
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-gray-600">Markdown editor</span>
+						</li>
+					</ul>
+					<button onclick={handleGetStarted} class="w-full border-2 border-teal-400 text-teal-400 px-6 py-3 rounded-lg font-semibold hover:bg-teal-50 transition">
+						Get Started
+					</button>
+				</div>
+
+				<!-- Pro Plan -->
+				<div class="bg-teal-400 p-8 rounded-xl shadow-sm transform scale-105 relative">
+					<div class="absolute top-0 right-0 bg-yellow-400 text-gray-900 text-sm font-bold px-4 py-1 rounded-bl-lg rounded-tr-lg">
+						POPULAR
+					</div>
+					<h4 class="text-2xl font-bold text-white mb-2">Pro</h4>
+					<div class="mb-6">
+						<span class="text-4xl font-bold text-white">$9</span>
+						<span class="text-white opacity-80">/month</span>
+					</div>
+					<ul class="space-y-4 mb-8">
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-white opacity-80 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-white">Unlimited workspaces</span>
+						</li>
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-white opacity-80 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-white">Unlimited notes</span>
+						</li>
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-white opacity-80 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-white">Advanced search</span>
+						</li>
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-white opacity-80 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-white">Offline sync</span>
+						</li>
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-white opacity-80 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-white">Priority support</span>
+						</li>
+					</ul>
+					<button onclick={handleGetStarted} class="w-full bg-white text-teal-400 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+						Start Free Trial
+					</button>
+				</div>
+
+				<!-- Team Plan -->
+			<div class="bg-white p-8 rounded-xl border-2 border-gray-200 hover:border-teal-300 transition">
+					<h4 class="text-2xl font-bold text-gray-900 mb-2">Team</h4>
+					<div class="mb-6">
+						<span class="text-4xl font-bold text-gray-900">$29</span>
+						<span class="text-gray-600">/month</span>
+					</div>
+					<ul class="space-y-4 mb-8">
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-gray-600">Everything in Pro</span>
+						</li>
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-gray-600">Up to 10 team members</span>
+						</li>
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-gray-600">Shared workspaces</span>
+						</li>
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-gray-600">Admin controls</span>
+						</li>
+						<li class="flex items-start">
+							<svg class="w-6 h-6 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+							<span class="text-gray-600">24/7 support</span>
+						</li>
+					</ul>
+					<button onclick={handleGetStarted} class="w-full border-2 border-teal-400 text-teal-400 px-6 py-3 rounded-lg font-semibold hover:bg-teal-50 transition">
+						Contact Sales
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- About Section -->
+	<section id="about" class="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-4xl mx-auto text-center">
+			<h3 class="text-4xl font-bold text-gray-900 mb-6">Built for thinkers</h3>
+			<p class="text-xl text-gray-600 mb-8">
+				Tadwin is a markdown-first note-taking app designed to help you capture ideas, organize thoughts, 
+				and build your personal knowledge base. Whether you're a developer documenting your code, 
+				a writer drafting your next article, or a student taking class notes, Tadwin provides the 
+				perfect environment for focused, distraction-free writing.
+			</p>
+			<p class="text-lg text-gray-600 mb-8">
+				We believe in simplicity, speed, and user ownership of data. That's why Tadwin is built 
+				with modern web technologies to deliver a fast, responsive experience while keeping your 
+				data secure and private.
+			</p>
+		</div>
+	</section>
+
+	<!-- CTA Section -->
+	<section class="py-20 px-4 sm:px-6 lg:px-8 bg-teal-400">
+		<div class="max-w-4xl mx-auto text-center">
+			<h3 class="text-4xl font-bold text-white mb-6">Ready to get organized?</h3>
+			<p class="text-xl text-white/80 mb-8">
+				Join thousands of users who trust Tadwin for their note-taking needs.
+			</p>
+			<div class="flex flex-col sm:flex-row gap-4 justify-center">
+				<button onclick={handleGetStarted} class="bg-white text-teal-400 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition ">
+					Start Free Trial
+				</button>
+				<button onclick={() => window.location.href = '#pricing'} class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/10 transition">
+					View Pricing
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="bg-gray-900 text-gray-400 py-12 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<div class="grid md:grid-cols-4 gap-8 mb-8">
+				<div>
+					<h4 class="text-white font-bold text-lg mb-4">Tadwin</h4>
+					<p class="text-sm">Your markdown-first note-taking companion.</p>
+				</div>
+				<div>
+					<h5 class="text-white font-semibold mb-4">Product</h5>
+					<ul class="space-y-2 text-sm">
+						<li><a href="#features" class="hover:text-white transition">Features</a></li>
+						<li><a href="#pricing" class="hover:text-white transition">Pricing</a></li>
+						<li><a href="/register" class="hover:text-white transition">Sign Up</a></li>
+					</ul>
+				</div>
+				<div>
+					<h5 class="text-white font-semibold mb-4">Company</h5>
+					<ul class="space-y-2 text-sm">
+						<li><a href="#about" class="hover:text-white transition">About</a></li>
+						<li><a href="/blog" class="hover:text-white transition">Blog</a></li>
+						<li><a href="/contact" class="hover:text-white transition">Contact</a></li>
+					</ul>
+				</div>
+				<div>
+					<h5 class="text-white font-semibold mb-4">Legal</h5>
+					<ul class="space-y-2 text-sm">
+						<li><a href="/privacy" class="hover:text-white transition">Privacy Policy</a></li>
+						<li><a href="/terms" class="hover:text-white transition">Terms of Service</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="border-t border-gray-800 pt-8 text-center text-sm">
+				<p>&copy; 2025 Tadwin. All rights reserved.</p>
+			</div>
+		</div>
+	</footer>
+</div>
+
+<style>
+	:global(html) {
+		scroll-behavior: smooth;
+	}
+</style>

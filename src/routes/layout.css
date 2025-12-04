@@ -1,0 +1,172 @@
+@import "tailwindcss";
+@plugin '@tailwindcss/forms';
+
+:root {
+  /* Font */
+  --font-family: "Oddval", sans-serif;
+
+  /* Teal (default) */
+  --primary-color: #2dd4bf;
+  --primary-hover: #5eead4;
+  --primary-light: #99f6e4;
+  --primary-bg: #ccfbf1;
+
+  /* Orange */
+  --orange-primary: #fb923c;
+  --orange-hover: #fdba74;
+  --orange-light: #fed7aa;
+  --orange-bg: #ffedd5;
+
+  /* Pink */
+  --pink-primary: #f472b6;
+  --pink-hover: #f9a8d4;
+  --pink-light: #fbcfe8;
+  --pink-bg: #fce7f3;
+
+  /* Lime */
+  --lime-primary: #84cc16;
+  --lime-hover: #a3e635;
+  --lime-light: #d9f99d;
+  --lime-bg: #ecfccb;
+}
+
+[data-theme="orange"] {
+  --primary-color: var(--orange-primary);
+  --primary-hover: var(--orange-hover);
+  --primary-light: var(--orange-light);
+  --primary-bg: var(--orange-bg);
+}
+
+[data-theme="pink"] {
+  --primary-color: var(--pink-primary);
+  --primary-hover: var(--pink-hover);
+  --primary-light: var(--pink-light);
+  --primary-bg: var(--pink-bg);
+}
+
+[data-theme="lime"] {
+  --primary-color: var(--lime-primary);
+  --primary-hover: var(--lime-hover);
+  --primary-light: var(--lime-light);
+  --primary-bg: var(--lime-bg);
+}
+
+/* Custom color utilities using CSS variables */
+.bg-primary {
+  background-color: var(--primary-color);
+}
+
+.text-primary {
+  color: var(--primary-color);
+}
+
+.border-primary {
+  border-color: var(--primary-color);
+}
+
+.border-primary-light {
+  border-color: var(--primary-light);
+}
+
+.border-l-primary {
+  border-left-color: var(--primary-color);
+}
+
+.hover\:bg-primary-hover:hover {
+  background-color: var(--primary-hover);
+}
+
+.hover\:text-primary-hover:hover {
+  color: var(--primary-hover);
+}
+
+.hover\:border-primary-hover:hover {
+  border-color: var(--primary-hover);
+}
+
+.bg-primary-light {
+  background-color: var(--primary-light);
+}
+
+.bg-primary-bg {
+  background-color: var(--primary-bg);
+}
+
+.focus\:ring-primary:focus {
+  --tw-ring-color: var(--primary-color);
+}
+
+/* Gradient utilities */
+.bg-gradient-conic {
+  background: linear-gradient(
+    135deg,
+    var(--primary-bg) 0%,
+    var(--primary-light) 50%,
+    var(--primary-bg) 100%
+  );
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Global Styles */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-family);
+}
+
+/* Custom Tooltip */
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-wrapper .tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  z-index: 1000;
+  background-color: var(--primary-color);
+  color: white;
+  text-align: left;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  font-family: var(--font-family);
+  white-space: normal;
+  bottom: 125%;
+  left: 0;
+  transform: translateY(5px);
+  transition: opacity 0.3s, transform 0.3s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  max-width: 16rem;
+  width: max-content;
+}
+
+.tooltip-wrapper .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 1.25rem;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--primary-color) transparent transparent transparent;
+}
+
+.tooltip-wrapper:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
